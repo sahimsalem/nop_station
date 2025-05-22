@@ -10,7 +10,7 @@ part of 'api_service.dart';
 
 class _ApiService implements ApiService {
   _ApiService(this._dio, {this.baseUrl, this.errorLogger}) {
-    baseUrl ??= 'http://plugin.nop-station.com/api';
+    baseUrl ??= 'http://plugin.nop-station.com/api/';
   }
 
   final Dio _dio;
@@ -25,7 +25,7 @@ class _ApiService implements ApiService {
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{
       r'Content-Type': 'application/json',
-      r'DeviceId': '1234567890',
+      r'DeviceId': '44b4d8cd-7a2d-4a5f-a0e2-798021f1e294',
     };
     _headers.removeWhere((k, v) => v == null);
     const Map<String, dynamic>? _data = null;
@@ -38,7 +38,7 @@ class _ApiService implements ApiService {
           )
           .compose(
             _dio.options,
-            '/slider/homepageslider',
+            'slider/homepageslider',
             queryParameters: queryParameters,
             data: _data,
           )

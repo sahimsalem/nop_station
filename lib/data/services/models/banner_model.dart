@@ -4,11 +4,14 @@ part 'banner_model.g.dart';
 
 @JsonSerializable()
 class BannerResponse {
-  final BannerData data;
+  @JsonKey(name: 'Data')
+  final BannerData? data;
+  @JsonKey(name: 'Message')
   final String? message;
-  final List<dynamic> errorList;
+  @JsonKey(name: 'ErrorList')
+  final List<dynamic>? errorList;
 
-  BannerResponse({required this.data, this.message, required this.errorList});
+  BannerResponse({this.data, this.message, this.errorList});
 
   factory BannerResponse.fromJson(Map<String, dynamic> json) => _$BannerResponseFromJson(json);
   Map<String, dynamic> toJson() => _$BannerResponseToJson(this);
@@ -16,10 +19,12 @@ class BannerResponse {
 
 @JsonSerializable()
 class BannerData {
-  final bool isEnabled;
-  final List<Banner> banners;
+  @JsonKey(name: 'IsEnabled')
+  final bool? isEnabled;
+  @JsonKey(name: 'Sliders')
+  final List<Banner>? sliders;
 
-  BannerData({required this.isEnabled, required this.banners});
+  BannerData({this.isEnabled, this.sliders});
 
   factory BannerData.fromJson(Map<String, dynamic> json) => _$BannerDataFromJson(json);
   Map<String, dynamic> toJson() => _$BannerDataToJson(this);
@@ -27,9 +32,13 @@ class BannerData {
 
 @JsonSerializable()
 class Banner {
+  @JsonKey(name: 'ImageUrl')
   final String imageUrl;
+  @JsonKey(name: 'SliderType')
   final int sliderType;
+  @JsonKey(name: 'EntityId')
   final int entityId;
+  @JsonKey(name: 'Id')
   final int id;
 
   Banner({

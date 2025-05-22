@@ -8,41 +8,43 @@ part of 'banner_model.dart';
 
 BannerResponse _$BannerResponseFromJson(Map<String, dynamic> json) =>
     BannerResponse(
-      data: BannerData.fromJson(json['data'] as Map<String, dynamic>),
-      message: json['message'] as String?,
-      errorList: json['errorList'] as List<dynamic>,
+      data: json['Data'] == null
+          ? null
+          : BannerData.fromJson(json['Data'] as Map<String, dynamic>),
+      message: json['Message'] as String?,
+      errorList: json['ErrorList'] as List<dynamic>?,
     );
 
 Map<String, dynamic> _$BannerResponseToJson(BannerResponse instance) =>
     <String, dynamic>{
-      'data': instance.data,
-      'message': instance.message,
-      'errorList': instance.errorList,
+      'Data': instance.data,
+      'Message': instance.message,
+      'ErrorList': instance.errorList,
     };
 
 BannerData _$BannerDataFromJson(Map<String, dynamic> json) => BannerData(
-  isEnabled: json['isEnabled'] as bool,
-  banners: (json['banners'] as List<dynamic>)
-      .map((e) => Banner.fromJson(e as Map<String, dynamic>))
+  isEnabled: json['IsEnabled'] as bool?,
+  sliders: (json['Sliders'] as List<dynamic>?)
+      ?.map((e) => Banner.fromJson(e as Map<String, dynamic>))
       .toList(),
 );
 
 Map<String, dynamic> _$BannerDataToJson(BannerData instance) =>
     <String, dynamic>{
-      'isEnabled': instance.isEnabled,
-      'banners': instance.banners,
+      'IsEnabled': instance.isEnabled,
+      'Sliders': instance.sliders,
     };
 
 Banner _$BannerFromJson(Map<String, dynamic> json) => Banner(
-  imageUrl: json['imageUrl'] as String,
-  sliderType: (json['sliderType'] as num).toInt(),
-  entityId: (json['entityId'] as num).toInt(),
-  id: (json['id'] as num).toInt(),
+  imageUrl: json['ImageUrl'] as String,
+  sliderType: (json['SliderType'] as num).toInt(),
+  entityId: (json['EntityId'] as num).toInt(),
+  id: (json['Id'] as num).toInt(),
 );
 
 Map<String, dynamic> _$BannerToJson(Banner instance) => <String, dynamic>{
-  'imageUrl': instance.imageUrl,
-  'sliderType': instance.sliderType,
-  'entityId': instance.entityId,
-  'id': instance.id,
+  'ImageUrl': instance.imageUrl,
+  'SliderType': instance.sliderType,
+  'EntityId': instance.entityId,
+  'Id': instance.id,
 };

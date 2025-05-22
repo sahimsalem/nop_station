@@ -9,6 +9,7 @@ class BannerWidget extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final banners = ref.watch(bannerProvider);
+    print(banners);
     return banners.when(
       data: (data) => SizedBox(
         height: 200,
@@ -19,7 +20,7 @@ class BannerWidget extends ConsumerWidget {
             padding: const EdgeInsets.all(8.0),
             child: Image.network(
               data[index].imageUrl,
-              width: 300,
+              width: 50,
               fit: BoxFit.cover,
               loadingBuilder: (context, child, loadingProgress) =>
                   loadingProgress == null ? child : CircularProgressIndicator(),
