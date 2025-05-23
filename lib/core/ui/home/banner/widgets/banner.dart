@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:nop_station_api/core/providers.dart';
 
+final _carouselIndexProvider = StateProvider<int>((ref) => 0);
 
 class BannerWidget extends ConsumerWidget {
   const BannerWidget({super.key});
@@ -11,17 +12,21 @@ class BannerWidget extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final banners = ref.watch(bannerProvider);
-  // Keep for debugging
+
     return banners.when(
       data: (data) => SizedBox(
         height: 300,
+        width: double.infinity,
         child: data.isEmpty
             ? Center(child: Text('No banners available'))
-            : Row(
+            : Column(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
+                  SizedBox(height: 30),
                   CarouselSlider.builder(
                     itemCount: data.length,
                     itemBuilder: (context, index, realIndex) => Padding(
+                      key: Key(data[index].id.toString()),
                       padding: const EdgeInsets.symmetric(horizontal: 4.0),
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(8.0),
@@ -29,8 +34,10 @@ class BannerWidget extends ConsumerWidget {
                           imageUrl: data[index].imageUrl,
                           width: double.infinity,
                           fit: BoxFit.cover,
-                          placeholder: (context, url) => Center(child: CircularProgressIndicator()),
-                          errorWidget: (context, url, error) => Icon(Icons.error),
+                          placeholder: (context, url) =>
+                              Center(child: CircularProgressIndicator()),
+                          errorWidget: (context, url, error) =>
+                              Icon(Icons.error),
                         ),
                       ),
                     ),
@@ -40,13 +47,12 @@ class BannerWidget extends ConsumerWidget {
                       enlargeCenterPage: true,
                       aspectRatio: 2.0,
                       viewportFraction: 0.90,
-                      reverse: false, // Ensures left-to-right sliding
                       onPageChanged: (index, reason) {
                         ref.read(_carouselIndexProvider.notifier).state = index;
                       },
                     ),
                   ),
-                  SizedBox(height: 8.0),
+                  const SizedBox(height: 8.0),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: List.generate(
@@ -54,7 +60,7 @@ class BannerWidget extends ConsumerWidget {
                       (index) => Container(
                         width: 8.0,
                         height: 8.0,
-                        margin: EdgeInsets.symmetric(horizontal: 2.0),
+                        margin: const EdgeInsets.symmetric(horizontal: 2.0),
                         decoration: BoxDecoration(
                           shape: BoxShape.circle,
                           color: index == ref.watch(_carouselIndexProvider)
@@ -67,10 +73,8 @@ class BannerWidget extends ConsumerWidget {
                 ],
               ),
       ),
-      loading: () => Center(child: CircularProgressIndicator()),
+      loading: () => const Center(child: CircularProgressIndicator()),
       error: (error, _) => Center(child: Text('Error: $error')),
     );
   }
 }
-
-final _carouselIndexProvider = StateProvider<int>((ref) => 0);
