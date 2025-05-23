@@ -10,18 +10,16 @@ class BannerRepositoryImpl implements BannerRepository {
   @override
   Future<List<Banner>> getHomePageBanners() async {
     final response = await apiService.getHomePageBanners();
-    if (response.data?.isEnabled == true && response.data?.sliders != null) {
-      return response.data!.sliders!
-          .map(
-            (banner) => Banner(
-              imageUrl: banner.imageUrl,
-              sliderType: banner.sliderType,
-              entityId: banner.entityId,
-              id: banner.id,
-            ),
-          )
-          .toList();
-    }
-    return [];
+    return response.data?.sliders
+            ?.map(
+              (banner) => Banner(
+                imageUrl: banner.imageUrl,
+                sliderType: banner.sliderType,
+                entityId: banner.entityId,
+                id: banner.id,
+              ),
+            )
+            .toList() ??
+        [];
   }
 }

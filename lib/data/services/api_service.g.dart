@@ -10,7 +10,7 @@ part of 'api_service.dart';
 
 class _ApiService implements ApiService {
   _ApiService(this._dio, {this.baseUrl, this.errorLogger}) {
-    baseUrl ??= 'http://plugin.nop-station.com/api/';
+    baseUrl ??= Endpoints.base;
   }
 
   final Dio _dio;
@@ -38,7 +38,7 @@ class _ApiService implements ApiService {
           )
           .compose(
             _dio.options,
-            'slider/homepageslider',
+            Endpoints.getHomePageBanners,
             queryParameters: queryParameters,
             data: _data,
           )
